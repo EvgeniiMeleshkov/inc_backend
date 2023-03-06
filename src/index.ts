@@ -33,7 +33,7 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
   }
 })
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/videos', (req: Request, res: Response) => {
   try {
     res.status(200).send(videos)
   } catch (err) {
