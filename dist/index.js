@@ -52,7 +52,7 @@ app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, val
             availableResolutions: req.body.availableResolutions
         };
         videos.push(newVideo);
-        res.status(201).send(videos);
+        res.status(201).json(videos);
     }
     catch (err) {
         res.send(err.message);
