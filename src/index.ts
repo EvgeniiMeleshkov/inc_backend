@@ -48,8 +48,8 @@ app.post('/videos', titleValidator,
     try {
 
       const now = new Date()
-      const tomorrow = new Date(now.setDate(now.getDate() + 1))
-
+      let tomorrow = new Date(now)
+        tomorrow.setDate(tomorrow.getDate() + 1)
 
       let newVideo: any = {
         id: req.body.id ? req.body.id : +new Date(),
