@@ -37,8 +37,9 @@ exports.availableResolutionValidator = availableResolutionValidator;
 const validationHandler = (req, res, next) => {
     if (exports.errorsMessages.length > 0) {
         return (() => {
-            res.send(exports.errorsMessages);
+            res.json(exports.errorsMessages);
             exports.errorsMessages = [];
+            return; //?????????????????????????
         })();
     }
     else {
