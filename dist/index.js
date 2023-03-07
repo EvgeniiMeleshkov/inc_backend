@@ -18,6 +18,7 @@ const addDays = function (str, days) {
 };
 app.delete('/testing/all-data', (req, res) => {
     try {
+        videos = [];
         res.status(204).send(videos);
     }
     catch (err) {
@@ -34,7 +35,7 @@ app.get('/videos', (req, res) => {
 });
 app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
-        const now = addDays(new Date(), 1);
+        const now = new Date();
         const tomorrow = addDays(now, 1);
         let newVideo = {
             id: req.body.id ? req.body.id : +new Date(),
