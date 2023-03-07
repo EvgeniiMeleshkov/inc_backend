@@ -1,50 +1,109 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validationHandler = exports.availableResolutionValidator = exports.authorValidator = exports.titleValidator = exports.errorsMessages = void 0;
-const availableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160'];
-exports.errorsMessages = [];
-const titleValidator = (req, res, next) => {
-    const title = req.body.title ? String(req.body.title).trim() : null;
-    if (!title || title === '' || title.length > 40) {
-        exports.errorsMessages.push({
+exports.updateVideoValidation = exports.createVideoValidation = void 0;
+const availableResolutionsExample = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160'];
+// export let errorsMessages: Array<any> = []
+//
+// export const titleValidator = (req: Request, res: Response, next: any): any => {
+//   const title = req.body.title ? String(req.body.title).trim() : null
+//   if (!title || title === '' || title.length > 40) {
+//     errorsMessages.push(
+//       {
+//         message: 'не удалось загрузить видео, проверьте title',
+//         field: 'title'
+//       })
+//   }
+//   next()
+// }
+//
+// export const authorValidator = (req: Request, res: Response, next: any): any => {
+//   const author = req.body.author ? String(req.body.author).trim() : null
+//   if (!author || author === '' || author.length > 20) {
+//     errorsMessages.push(
+//       {
+//         message: 'не удалось загрузить видео, проверьте author',
+//         field: 'author'
+//       }
+//     )
+//   }
+//   next()
+// }
+//
+// export const availableResolutionValidator = (req: Request, res: Response, next: any): any => {
+//   const resolutions = req.body.availableResolutions
+//   if (!resolutions.every((el: any) => availableResolutionsExample.includes(el))
+//     || resolutions.length > availableResolutionsExample.length || resolutions.length === 0) {
+//     errorsMessages.push(
+//       {
+//         message: 'не удалось загрузить видео, проверьте resolution',
+//         field: 'availableResolutions'
+//       }
+//     )
+//   }
+//   next()
+// }
+//
+// export const validationHandler = (req: Request, res: Response, next: any): any => {
+//   if(errorsMessages.length > 0) {
+//     return (() => {
+//       res.send(errorsMessages)
+//       errorsMessages = []
+//     })()
+//   } else {
+//     next()
+//   }
+// }
+const createVideoValidation = (req, res, next) => {
+    const errorsMessages = [];
+    const { title, author, availableResolutions } = req.body;
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте title',
             field: 'title'
         });
     }
-    next();
-};
-exports.titleValidator = titleValidator;
-const authorValidator = (req, res, next) => {
-    const author = req.body.author ? String(req.body.author).trim() : null;
-    if (!author || author === '' || author.length > 20) {
-        exports.errorsMessages.push({
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+        errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте author',
             field: 'author'
         });
     }
-    next();
-};
-exports.authorValidator = authorValidator;
-const availableResolutionValidator = (req, res, next) => {
-    const resolutions = req.body.availableResolutions;
-    if (!resolutions.every((el) => availableResolutions.includes(el))
-        || resolutions.length > availableResolutions.length || resolutions.length === 0) {
-        exports.errorsMessages.push({
+    if (!availableResolutions.every((el) => availableResolutionsExample.includes(el))
+        || availableResolutions.length > availableResolutionsExample.length || availableResolutions.length === 0) {
+        errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте resolution',
             field: 'availableResolutions'
         });
     }
-    next();
+    if (errorsMessages.length > 0)
+        return res.status(400).send({ errorsMessages: errorsMessages });
+    return next();
 };
-exports.availableResolutionValidator = availableResolutionValidator;
-const validationHandler = (req, res, next) => {
-    if (exports.errorsMessages.length > 0) {
-        return (() => {
-            res.send(exports.errorsMessages);
-        })();
+exports.createVideoValidation = createVideoValidation;
+const updateVideoValidation = (req, res, next) => {
+    const errorsMessages = [];
+    const { title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate } = req.body;
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте title',
+            field: 'title'
+        });
     }
-    else {
-        next();
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте author',
+            field: 'author'
+        });
     }
+    if (!availableResolutions.every((el) => availableResolutionsExample.includes(el))
+        || availableResolutions.length > availableResolutionsExample.length || availableResolutions.length === 0) {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте resolution',
+            field: 'availableResolutions'
+        });
+    }
+    if (errorsMessages.length > 0)
+        return res.status(400).send({ errorsMessages: errorsMessages });
+    return next();
 };
-exports.validationHandler = validationHandler;
+exports.updateVideoValidation = updateVideoValidation;

@@ -4,9 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const validator_1 = require("./validator");
-const parserMiddleware = (0, body_parser_1.default)();
+const parserMiddleware = express_1.default.json();
 const app = (0, express_1.default)();
 const port = 3005;
 app.use(parserMiddleware);
@@ -19,7 +18,7 @@ const addDays = function (str, days) {
 app.delete('/testing/all-data', (req, res) => {
     try {
         videos = [];
-        res.status(204).send(videos);
+        res.sendStatus(204);
     }
     catch (err) {
         res.send(err);
@@ -33,22 +32,22 @@ app.get('/videos', (req, res) => {
         res.send(err);
     }
 });
-app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
+app.post('/videos', validator_1.createVideoValidation, (req, res) => {
     try {
         const now = new Date();
         const tomorrow = addDays(now, 1);
         let newVideo = {
-            id: req.body.id ? req.body.id : +new Date(),
+            id: +now,
             title: req.body.title,
             author: req.body.author,
-            canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
-            minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
+            canBeDownloaded: false,
+            minAgeRestriction: null,
             createdAt: now.toISOString(),
             publicationDate: tomorrow.toISOString(),
             availableResolutions: req.body.availableResolutions
         };
         videos.push(newVideo);
-        res.status(201).json(newVideo);
+        res.status(201).send(newVideo);
     }
     catch (err) {
         res.send(err.message);
@@ -62,27 +61,29 @@ app.get('/videos/:id', (req, res) => {
             return res.status(200).send(video);
         }
         else {
-            return res.send(404);
+            return res.sendStatus(404);
         }
     }
     catch (err) {
-        res.status(404);
+        res.sendStatus(404);
     }
 });
-app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
+app.put('/videos/:id', validator_1.updateVideoValidation, (req, res) => {
     try {
         const id = +req.params.id;
-        let video = videos.find((el) => el.id === id);
-        if (video) {
-            video = JSON.parse(JSON.stringify(req.body));
-            return res.send(204);
-        }
-        else {
-            return res.send(404);
-        }
+        const video = videos.find((el) => el.id === id);
+        if (!video)
+            return res.sendStatus(404);
+        video.title = req.body.title;
+        video.author = req.body.author;
+        video.canBeDownloaded = req.body.canBeDownloaded;
+        video.minAgeRestriction = req.body.minAgeRestriction;
+        video.publicationDate = req.body.publicationDate;
+        video.availableResolutions = req.body.availableResolutions;
+        return res.sendStatus(204);
     }
     catch (err) {
-        res.status(400);
+        res.sendStatus(400);
     }
 });
 app.delete('/videos/:id', (req, res) => {
@@ -91,10 +92,10 @@ app.delete('/videos/:id', (req, res) => {
         let video = videos.find((el) => el.id === id);
         if (video) {
             videos.filter((el) => el.id !== id);
-            return res.send(204);
+            return res.sendStatus(204);
         }
         else {
-            return res.send(404);
+            return res.sendStatus(404);
         }
     }
     catch (err) {
