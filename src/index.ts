@@ -50,11 +50,11 @@ app.post('/videos', titleValidator,
         id: +new Date(),
         title: req.body.title,
         author: req.body.author,
-        canBeDownloaded: req.body.canBeDownloaded,
-        minAgeRestriction: req.body.minAgeRestriction,
+        canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
+        minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
         createdAt: new Date().toISOString(),
         publicationDate: new Date().toISOString(),
-        availableResolutions: req.body.availableResolutions
+        availableResolutions: req.body.availableResolutions ? req.body.availableResolutions : ["P144"]
       }
       videos.push(newVideo)
       res.status(201).json(JSON.stringify(newVideo))
