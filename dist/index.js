@@ -41,18 +41,20 @@ app.get('/videos', (req, res) => {
 });
 app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
+        const now = new Date();
+        const tomorrow = new Date(now.setDate(now.getDate() + 1));
         let newVideo = {
             id: req.body.id ? req.body.id : +new Date(),
             title: req.body.title ? req.body.title : '',
             author: req.body.author ? req.body.author : '',
             canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
             minAgeRestriction: req.body.minAgeRestriction,
-            createdAt: new Date().toISOString(),
-            publicationDate: new Date().toISOString(),
+            createdAt: now.toISOString(),
+            publicationDate: tomorrow.toISOString(),
             availableResolutions: req.body.availableResolutions ? req.body.availableResolutions : ["P144"]
         };
         videos.push(newVideo);
-        res.status(201).json(JSON.stringify(newVideo));
+        res.status(201).json(newVideo);
     }
     catch (err) {
         res.send(err.message);
