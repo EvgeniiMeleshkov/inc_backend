@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express'
 import bodyParser from 'body-parser';
-import {authorValidator, availableResolutionValidator, titleValidator} from './validator';
+import {authorValidator, availableResolutionValidator, titleValidator, validationHandler} from './validator';
 
 const parserMiddleware = bodyParser()
 const app = express()
@@ -10,10 +10,10 @@ app.use(parserMiddleware)
 
 
 let video = {
-  'id': 0,
+  'id': new Date().toISOString(),
   'title': 'string',
   'author': 'string',
-  'canBeDownloaded': true,
+  'canBeDownloaded': false,
   'minAgeRestriction': null,
   'createdAt': '2023-03-06T03:33:49.753Z',
   'publicationDate': '2023-03-06T03:33:49.753Z',
@@ -44,14 +44,14 @@ app.get('/videos', (req: Request, res: Response) => {
 
 app.post('/videos', titleValidator,
   authorValidator,
-  availableResolutionValidator, (req: Request, res: Response) => {    //Java, Hi!
+  availableResolutionValidator, validationHandler, (req: Request, res: Response) => {    //Java, Hi!
     try {
-      let newVideo = {
-        id: +new Date(),
+      let newVideo: any = {
+        id: +new Date().toISOString(),
         title: req.body.title,
         author: req.body.author,
-        canBeDownloaded: false,
-        minAgeRestriction: null,
+        canBeDownloaded: req.body.canBeDownloaded,
+        minAgeRestriction: req.body.minAgeRestriction,
         createdAt: new Date().toISOString(),
         publicationDate: new Date().toISOString(),
         availableResolutions: req.body.availableResolutions
@@ -67,7 +67,7 @@ app.get('/videos/:id', (req: Request, res: Response):any => {
   try {
     const id = +req.params.id
 
-    const video = videos.find(el => el.id === id)
+    const video = videos.find((el: any) => el.id === id)
 
     if(video) {
       return res.status(200).send(video)
@@ -81,10 +81,10 @@ app.get('/videos/:id', (req: Request, res: Response):any => {
 
 app.put('/videos/:id', titleValidator,
   authorValidator,
-  availableResolutionValidator, (req: Request, res: Response):any => {
+  availableResolutionValidator, validationHandler, (req: Request, res: Response):any => {
     try {
       const id = +req.params.id
-      let video = videos.find(el => el.id === id)
+      let video = videos.find((el: any) => el.id === id)
       if (video) {
         video = JSON.parse(JSON.stringify(req.body))
         return res.status(200).send([video])
@@ -99,9 +99,9 @@ app.put('/videos/:id', titleValidator,
 app.delete('/videos/:id', (req: Request, res: Response):any => {
   try {
     const id = +req.params.id
-    let video = videos.find(el => el.id === id)
+    let video = videos.find((el: any) => el.id === id)
     if(video) {
-      videos.filter(el => el.id !== id)
+      videos.filter((el: any) => el.id !== id)
       return res.send(204)
     } else {
       return res.send(404)

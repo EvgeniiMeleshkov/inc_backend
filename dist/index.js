@@ -11,10 +11,10 @@ const app = (0, express_1.default)();
 const port = 3005;
 app.use(parserMiddleware);
 let video = {
-    'id': 0,
+    'id': new Date().toISOString(),
     'title': 'string',
     'author': 'string',
-    'canBeDownloaded': true,
+    'canBeDownloaded': false,
     'minAgeRestriction': null,
     'createdAt': '2023-03-06T03:33:49.753Z',
     'publicationDate': '2023-03-06T03:33:49.753Z',
@@ -31,7 +31,7 @@ app.delete('/testing/all-data', (req, res) => {
         res.send(err);
     }
 });
-app.get('/', (req, res) => {
+app.get('/videos', (req, res) => {
     try {
         res.status(200).send(videos);
     }
@@ -39,14 +39,14 @@ app.get('/', (req, res) => {
         res.send(err);
     }
 });
-app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, (req, res) => {
+app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
         let newVideo = {
-            id: +new Date(),
+            id: +new Date().toISOString(),
             title: req.body.title,
             author: req.body.author,
-            canBeDownloaded: false,
-            minAgeRestriction: null,
+            canBeDownloaded: req.body.canBeDownloaded,
+            minAgeRestriction: req.body.minAgeRestriction,
             createdAt: new Date().toISOString(),
             publicationDate: new Date().toISOString(),
             availableResolutions: req.body.availableResolutions
@@ -61,7 +61,7 @@ app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, val
 app.get('/videos/:id', (req, res) => {
     try {
         const id = +req.params.id;
-        const video = videos.find(el => el.id === id);
+        const video = videos.find((el) => el.id === id);
         if (video) {
             return res.status(200).send(video);
         }
@@ -73,10 +73,10 @@ app.get('/videos/:id', (req, res) => {
         res.status(404);
     }
 });
-app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, (req, res) => {
+app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
         const id = +req.params.id;
-        let video = videos.find(el => el.id === id);
+        let video = videos.find((el) => el.id === id);
         if (video) {
             video = JSON.parse(JSON.stringify(req.body));
             return res.status(200).send([video]);
@@ -92,9 +92,9 @@ app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, 
 app.delete('/videos/:id', (req, res) => {
     try {
         const id = +req.params.id;
-        let video = videos.find(el => el.id === id);
+        let video = videos.find((el) => el.id === id);
         if (video) {
-            videos.filter(el => el.id !== id);
+            videos.filter((el) => el.id !== id);
             return res.send(204);
         }
         else {
