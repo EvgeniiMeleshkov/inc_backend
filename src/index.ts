@@ -35,7 +35,6 @@ app.get('/videos', (req: Request, res: Response) => {
   }
 })
 
-
 app.post('/videos', titleValidator,
   authorValidator,
   availableResolutionValidator, validationHandler, (req: Request, res: Response) => {    //Java, Hi!
