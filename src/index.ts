@@ -57,7 +57,7 @@ app.post('/videos', titleValidator,
         availableResolutions: req.body.availableResolutions ? req.body.availableResolutions : ["P144"]
       }
       videos.push(newVideo)
-      res.status(201).json(JSON.stringify(newVideo))
+      res.status(201).json(newVideo)
     } catch (err: any) {
       res.send(err.message)
     }
