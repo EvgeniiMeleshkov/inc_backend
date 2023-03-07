@@ -46,7 +46,7 @@ app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, val
             title: req.body.title ? req.body.title : '',
             author: req.body.author ? req.body.author : '',
             canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
-            minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
+            minAgeRestriction: req.body.minAgeRestriction,
             createdAt: new Date().toISOString(),
             publicationDate: new Date().toISOString(),
             availableResolutions: req.body.availableResolutions ? req.body.availableResolutions : ["P144"]
