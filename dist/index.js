@@ -16,8 +16,8 @@ let video = {
     'author': 'string',
     'canBeDownloaded': false,
     'minAgeRestriction': null,
-    'createdAt': '2023-03-06T03:33:49.753Z',
-    'publicationDate': '2023-03-06T03:33:49.753Z',
+    'createdAt': new Date().toISOString(),
+    'publicationDate': new Date().toISOString(),
     'availableResolutions': [
         'P144'
     ]
@@ -79,7 +79,7 @@ app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, 
         let video = videos.find((el) => el.id === id);
         if (video) {
             video = JSON.parse(JSON.stringify(req.body));
-            return res.status(200).send([video]);
+            return res.status(200).send(JSON.stringify(video));
         }
         else {
             return res.send(404);
