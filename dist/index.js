@@ -11,7 +11,7 @@ const app = (0, express_1.default)();
 const port = 3005;
 app.use(parserMiddleware);
 let video = {
-    'id': new Date().toISOString(),
+    'id': new Date().getDate(),
     'title': 'string',
     'author': 'string',
     'canBeDownloaded': false,
@@ -42,7 +42,7 @@ app.get('/videos', (req, res) => {
 app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
         let newVideo = {
-            id: +new Date().toISOString(),
+            id: +new Date(),
             title: req.body.title,
             author: req.body.author,
             canBeDownloaded: req.body.canBeDownloaded,

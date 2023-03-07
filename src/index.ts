@@ -10,7 +10,7 @@ app.use(parserMiddleware)
 
 
 let video = {
-  'id': new Date(),
+  'id': new Date().getDate(),
   'title': 'string',
   'author': 'string',
   'canBeDownloaded': false,
