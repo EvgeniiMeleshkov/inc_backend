@@ -91,7 +91,7 @@ app.delete('/videos/:id', (req, res) => {
         const id = +req.params.id;
         let video = videos.find((el) => el.id === id);
         if (video) {
-            videos.filter((el) => el.id !== id);
+            videos = videos.filter((el) => el.id !== id);
             return res.sendStatus(204);
         }
         else {

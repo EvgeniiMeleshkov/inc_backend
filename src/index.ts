@@ -103,7 +103,7 @@ app.delete('/videos/:id', (req: Request, res: Response):any => {
     const id = +req.params.id
     let video = videos.find((el: VideoType) => el.id === id)
     if(video) {
-      videos.filter((el: VideoType) => el.id !== id)
+      videos = videos.filter((el: VideoType) => el.id !== id)
       return res.sendStatus(204)
     } else {
       return res.sendStatus(404)

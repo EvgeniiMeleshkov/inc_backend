@@ -102,6 +102,27 @@ const updateVideoValidation = (req, res, next) => {
             field: 'availableResolutions'
         });
     }
+    if (typeof canBeDownloaded === 'undefined' || typeof canBeDownloaded !== 'boolean') {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте canBeDownloaded',
+            field: 'canBeDownloaded'
+        });
+    }
+    if (!minAgeRestriction
+        || (typeof minAgeRestriction !== 'number' || minAgeRestriction === null)
+        || minAgeRestriction < 1
+        || minAgeRestriction > 18) {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте minAgeRestriction',
+            field: 'minAgeRestriction'
+        });
+    }
+    if (!publicationDate || typeof publicationDate !== 'string' || !publicationDate.trim()) {
+        errorsMessages.push({
+            message: 'не удалось загрузить видео, проверьте publicationDate',
+            field: 'publicationDate'
+        });
+    }
     if (errorsMessages.length > 0)
         return res.status(400).send({ errorsMessages: errorsMessages });
     return next();
