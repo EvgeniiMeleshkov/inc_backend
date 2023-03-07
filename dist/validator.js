@@ -4,7 +4,8 @@ exports.validationHandler = exports.availableResolutionValidator = exports.autho
 const availableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160'];
 exports.errorsMessages = [];
 const titleValidator = (req, res, next) => {
-    if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40) {
+    const title = req.body.title ? String(req.body.title).trim() : null;
+    if (!title || title === '' || title.length > 40) {
         exports.errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте title',
             field: 'title'
@@ -14,7 +15,8 @@ const titleValidator = (req, res, next) => {
 };
 exports.titleValidator = titleValidator;
 const authorValidator = (req, res, next) => {
-    if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20) {
+    const author = req.body.author ? String(req.body.author).trim() : null;
+    if (!author || author === '' || author.length > 20) {
         exports.errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте author',
             field: 'author'
