@@ -26,8 +26,9 @@ const authorValidator = (req, res, next) => {
 };
 exports.authorValidator = authorValidator;
 const availableResolutionValidator = (req, res, next) => {
-    if (!req.body.availableResolutions.every((el) => availableResolutions.includes(el))
-        || req.body.availableResolutions.length > availableResolutions.length) {
+    const resolutions = req.body.availableResolutions;
+    if (!resolutions.every((el) => availableResolutions.includes(el))
+        || resolutions.length > availableResolutions.length || resolutions.length === 0) {
         exports.errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте resolution',
             field: 'availableResolutions'

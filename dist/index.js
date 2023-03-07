@@ -39,13 +39,13 @@ app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, val
         const tomorrow = addDays(now, 1);
         let newVideo = {
             id: req.body.id ? req.body.id : +new Date(),
-            title: req.body.title ? req.body.title : '',
-            author: req.body.author ? req.body.author : '',
-            canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
+            title: req.body.title,
+            author: req.body.author,
+            canBeDownloaded: req.body.canBeDownloaded,
             minAgeRestriction: req.body.minAgeRestriction,
             createdAt: now.toISOString(),
             publicationDate: tomorrow.toISOString(),
-            availableResolutions: req.body.availableResolutions ? req.body.availableResolutions : ["P144"]
+            availableResolutions: req.body.availableResolutions
         };
         videos.push(newVideo);
         res.status(201).json(newVideo);
