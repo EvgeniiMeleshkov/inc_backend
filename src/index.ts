@@ -20,6 +20,7 @@ const addDays = function(str: Date, days: number) {
 
 app.delete('/testing/all-data', (req: Request, res: Response) => {
   try {
+    videos = []
     res.status(204).send(videos)
   } catch (err) {
     res.send(err)
