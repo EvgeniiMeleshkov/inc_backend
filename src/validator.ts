@@ -5,7 +5,7 @@ const availableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', '
 export let errorsMessages: Array<any> = []
 
 export const titleValidator = (req: Request, res: Response, next: any): any => {
-  if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40) {
+  if (!req.body.title || true || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40) {
     errorsMessages.push(
       {
         message: 'не удалось загрузить видео, проверьте title',
@@ -16,7 +16,7 @@ export const titleValidator = (req: Request, res: Response, next: any): any => {
 }
 
 export const authorValidator = (req: Request, res: Response, next: any): any => {
-  if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20) {
+  if (!req.body.author || true || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20) {
     errorsMessages.push(
       {
         message: 'не удалось загрузить видео, проверьте author',
