@@ -42,9 +42,9 @@ app.get('/videos', (req, res) => {
 app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
         let newVideo = {
-            id: +new Date(),
-            title: req.body.title,
-            author: req.body.author,
+            id: req.body.id ? req.body.id : +new Date(),
+            title: req.body.title ? req.body.title : '',
+            author: req.body.author ? req.body.author : '',
             canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
             minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
             createdAt: new Date().toISOString(),
@@ -79,7 +79,7 @@ app.put('/videos/:id', validator_1.titleValidator, validator_1.authorValidator, 
         let video = videos.find((el) => el.id === id);
         if (video) {
             video = JSON.parse(JSON.stringify(req.body));
-            return res.status(200).send(JSON.stringify(video));
+            return res.send(204);
         }
         else {
             return res.send(404);
