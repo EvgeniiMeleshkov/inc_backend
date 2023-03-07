@@ -10,7 +10,7 @@ app.use(parserMiddleware)
 
 
 let video = {
-  'id': new Date().toISOString(),
+  'id': new Date(),
   'title': 'string',
   'author': 'string',
   'canBeDownloaded': false,
@@ -47,7 +47,7 @@ app.post('/videos', titleValidator,
   availableResolutionValidator, validationHandler, (req: Request, res: Response) => {    //Java, Hi!
     try {
       let newVideo: any = {
-        id: +new Date().toISOString(),
+        id: +new Date(),
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: req.body.canBeDownloaded,
