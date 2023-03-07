@@ -43,7 +43,7 @@ export const availableResolutionValidator = (req: Request, res: Response, next: 
 export const validationHandler = (req: Request, res: Response, next: any): any => {
   if(errorsMessages.length > 0) {
     return (() => {
-      res.json(errorsMessages)
+      res.json({errorsMessages})
       errorsMessages = []
       return                                           //?????????????????????????
     })()
