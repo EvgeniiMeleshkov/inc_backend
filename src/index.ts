@@ -49,7 +49,7 @@ app.post('/videos', titleValidator,
         title: req.body.title ,
         author: req.body.author,
         canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
-        minAgeRestriction: req.body.minAgeRestriction,
+        minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
         createdAt: now.toISOString(),
         publicationDate: tomorrow.toISOString(),
         availableResolutions: req.body.availableResolutions

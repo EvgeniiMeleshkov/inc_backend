@@ -41,8 +41,8 @@ app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, val
             id: req.body.id ? req.body.id : +new Date(),
             title: req.body.title,
             author: req.body.author,
-            canBeDownloaded: req.body.canBeDownloaded,
-            minAgeRestriction: req.body.minAgeRestriction,
+            canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
+            minAgeRestriction: req.body.minAgeRestriction ? req.body.minAgeRestriction : null,
             createdAt: now.toISOString(),
             publicationDate: tomorrow.toISOString(),
             availableResolutions: req.body.availableResolutions
