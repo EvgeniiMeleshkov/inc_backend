@@ -53,7 +53,7 @@ app.post('/videos', titleValidator,
   availableResolutionValidator, validationHandler, (req: Request, res: Response) => {    //Java, Hi!
     try {
 
-      const now = new Date()
+      const now = addDays(new Date(), 1)
       const tomorrow = addDays(now, 1)
 
       let newVideo: any = {

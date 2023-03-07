@@ -46,7 +46,7 @@ app.get('/videos', (req, res) => {
 });
 app.post('/videos', validator_1.titleValidator, validator_1.authorValidator, validator_1.availableResolutionValidator, validator_1.validationHandler, (req, res) => {
     try {
-        const now = new Date();
+        const now = addDays(new Date(), 1);
         const tomorrow = addDays(now, 1);
         let newVideo = {
             id: req.body.id ? req.body.id : +new Date(),
