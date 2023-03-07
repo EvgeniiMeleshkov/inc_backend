@@ -10,19 +10,7 @@ const parserMiddleware = (0, body_parser_1.default)();
 const app = (0, express_1.default)();
 const port = 3005;
 app.use(parserMiddleware);
-let video = {
-    'id': new Date().getDate(),
-    'title': 'string',
-    'author': 'string',
-    'canBeDownloaded': false,
-    'minAgeRestriction': null,
-    'createdAt': new Date().toISOString(),
-    'publicationDate': new Date().toISOString(),
-    'availableResolutions': [
-        'P144'
-    ]
-};
-let videos = [video];
+let videos = [];
 const addDays = function (str, days) {
     let myDate = new Date(str);
     myDate.setDate(myDate.getDate() + days);

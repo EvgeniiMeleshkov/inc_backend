@@ -9,20 +9,7 @@ const port = 3005
 app.use(parserMiddleware)
 
 
-let video = {
-  'id': new Date().getDate(),
-  'title': 'string',
-  'author': 'string',
-  'canBeDownloaded': false,
-  'minAgeRestriction': null,
-  'createdAt': new Date().toISOString(),
-  'publicationDate': new Date().toISOString(),
-  'availableResolutions': [
-    'P144'
-  ]
-}
-
-let videos = [video]
+let videos: any = []
 
 const addDays = function(str: Date, days: number) {
   let myDate = new Date(str);
