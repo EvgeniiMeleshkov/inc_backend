@@ -24,6 +24,12 @@ let video = {
 
 let videos = [video]
 
+const addDays = function(str: Date, days: number) {
+  let myDate = new Date(str);
+  myDate.setDate(myDate.getDate() + days);
+  return myDate;
+}
+
 
 app.delete('/testing/all-data', (req: Request, res: Response) => {
   try {
@@ -48,8 +54,7 @@ app.post('/videos', titleValidator,
     try {
 
       const now = new Date()
-      let tomorrow = new Date(now)
-        tomorrow.setDate(tomorrow.getDate() + 1)
+      const tomorrow = addDays(now, 1)
 
       let newVideo: any = {
         id: req.body.id ? req.body.id : +new Date(),
