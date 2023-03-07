@@ -86,12 +86,14 @@ app.put('/videos/:id', updateVideoValidation, (req: Request, res: Response):any 
       const id = +req.params.id
       const video = videos.find((el: VideoType) => el.id === id)
       if (!video) return res.sendStatus(404)
+
       video.title = req.body.title
       video.author = req.body.author
       video.canBeDownloaded = req.body.canBeDownloaded
       video.minAgeRestriction = req.body.minAgeRestriction
       video.publicationDate = req.body.publicationDate
       video.availableResolutions = req.body.availableResolutions
+
       return res.sendStatus(204)
     } catch (err: any) {
       res.sendStatus(400)
@@ -110,7 +112,7 @@ app.delete('/videos/:id', (req: Request, res: Response):any => {
     }
 
   } catch (err) {
-    res.status(404)
+    res.sendStatus(404)
   }
 })
 
