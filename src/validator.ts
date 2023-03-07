@@ -89,14 +89,15 @@ export const createVideoValidation = (req: Request, res: Response, next: NextFun
 export const updateVideoValidation = (req: Request, res: Response, next: NextFunction) => {
   const errorsMessages = []
   const {title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate} = req.body
-  if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+
+  if (!title || typeof title !== 'string' || title.length > 40) {
     errorsMessages.push(
       {
         message: 'не удалось загрузить видео, проверьте title',
         field: 'title'
       })
   }
-  if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+  if (!author || typeof author !== 'string' || author.length > 20) {
     errorsMessages.push(
       {
         message: 'не удалось загрузить видео, проверьте author',
@@ -128,7 +129,7 @@ export const updateVideoValidation = (req: Request, res: Response, next: NextFun
       field: 'minAgeRestriction'
     })
   }
-  if (!publicationDate || typeof publicationDate !== 'string' || !publicationDate.trim()) {
+  if (!publicationDate || typeof publicationDate !== 'string') {
     errorsMessages.push(
       {
         message: 'не удалось загрузить видео, проверьте publicationDate',
