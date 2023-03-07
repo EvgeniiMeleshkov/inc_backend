@@ -46,9 +46,9 @@ app.post('/videos', titleValidator,
 
       let newVideo: any = {
         id: req.body.id ? req.body.id : +new Date(),
-        title: req.body.title,
+        title: req.body.title ,
         author: req.body.author,
-        canBeDownloaded: req.body.canBeDownloaded,
+        canBeDownloaded: req.body.canBeDownloaded ? req.body.canBeDownloaded : false,
         minAgeRestriction: req.body.minAgeRestriction,
         createdAt: now.toISOString(),
         publicationDate: tomorrow.toISOString(),
