@@ -72,6 +72,7 @@ export const blogValidation = (req: Request, res: Response, next: NextFunction) 
       }
     )
   }
+
   if(!websiteUrl
     || typeof websiteUrl !== 'string'
     || websiteUrl.length > 100

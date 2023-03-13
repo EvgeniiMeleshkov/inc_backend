@@ -24,6 +24,7 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
   }
 })
 
+
 app.use('/videos', videoRouter)
 app.use('/blogs', blogs)
 app.use('/posts', posts)
