@@ -19,7 +19,7 @@ export const createVideo = (req: Request, res: Response) => {    //Java, Hi!
 
     let newVideo: any = {
       id: +now,
-      title: req.body.title ,
+      title: req.body.title,
       author: req.body.author,
       canBeDownloaded: false,
       minAgeRestriction: null,
@@ -34,12 +34,12 @@ export const createVideo = (req: Request, res: Response) => {    //Java, Hi!
   }
 }
 
-export const getOneVideo = (req: Request, res: Response):any => {
+export const getOneVideo = (req: Request, res: Response): any => {
   try {
     const id = +req.params.id
     const video = videos.find((el: VideoType) => el.id === id)
 
-    if(video) {
+    if (video) {
       return res.status(200).send(video)
     } else {
       return res.sendStatus(404)
@@ -49,7 +49,7 @@ export const getOneVideo = (req: Request, res: Response):any => {
   }
 }
 
-export const updateVideo = (req: Request, res: Response):any => {
+export const updateVideo = (req: Request, res: Response): any => {
   try {
     const id = +req.params.id
     const video = videos.find((el: VideoType) => el.id === id)
@@ -68,16 +68,13 @@ export const updateVideo = (req: Request, res: Response):any => {
   }
 }
 
-export const removeVideo =  (req: Request, res: Response):any => {
+export const removeVideo = (req: Request, res: Response): any => {
   try {
     const id = +req.params.id
     let video = videos.find((el: VideoType) => el.id === id)
-    if(video) {
-      videoRepo.setVideos(videos.filter((el: VideoType) => el.id !== id))
-      return res.sendStatus(204)
-    } else {
-      return res.sendStatus(404)
-    }
+    if (!video) return res.sendStatus(404)
+    videoRepo.setVideos(videos.filter((el: VideoType) => el.id !== video?.id))
+    return res.sendStatus(204)
 
   } catch (err) {
     res.sendStatus(404)
