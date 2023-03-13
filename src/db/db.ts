@@ -24,6 +24,9 @@ const blogs = {
   deleteById (id: string) {
     const doc: any = this.getById(id)
     this.documents = this.documents.filter((x: any)=> x.id !== doc.id)
+  },
+  deleteAllBlogs () {
+    this.documents = []
   }
 }
 
@@ -54,6 +57,9 @@ const posts = {
   deleteById (id: string) {
     const post: any = this.getById(id)
     this.documents = this.documents.filter((x: any)=>x.id !== post.id)
+  },
+  deleteAllPosts () {
+    this.documents = []
   }
 }
 

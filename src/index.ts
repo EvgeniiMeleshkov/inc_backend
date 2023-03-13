@@ -16,8 +16,8 @@ app.use(parserMiddleware)
 app.delete('/testing/all-data', (req: Request, res: Response) => {
   try {
     videoRepo.setVideos([])
-    db.posts.documents = []
-    db.blogs.documents = []
+    db.posts.deleteAllPosts()
+    db.blogs.deleteAllBlogs()
     res.sendStatus(204)
   } catch (err) {
     res.send(err)
