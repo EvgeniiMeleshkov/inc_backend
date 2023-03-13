@@ -20,6 +20,7 @@ function deleteById (id: string) {
   return db.blogs.deleteById(id)
 }
 
+
 export default {
   getAll,
   post,
