@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import {addDays} from '../utils/addDay';
 import {videoRepo, VideoType} from '../repo/videoRepo';
 
-const videos = videoRepo.getVideos()
+let videos = videoRepo.getVideos()
 
 export const getVideos = (req: Request, res: Response) => {
   try {
@@ -73,7 +73,7 @@ export const removeVideo = (req: Request, res: Response): any => {
     const id = +req.params.id
     let video = videos.find((el: VideoType) => el.id === id)
     if (!video) return res.sendStatus(404)
-    videoRepo.setVideos(videos.filter((el: VideoType) => el.id !== video?.id))
+    videos = videos.filter((el: VideoType) => el.id !== video?.id)
     return res.sendStatus(204)
 
   } catch (err) {
