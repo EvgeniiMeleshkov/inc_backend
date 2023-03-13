@@ -56,13 +56,13 @@ const availableResolutionsExample = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1
 const createVideoValidation = (req, res, next) => {
     const errorsMessages = [];
     const { title, author, availableResolutions } = req.body;
-    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+    if (!title || typeof title !== 'string' || title.length > 40) {
         errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте title',
             field: 'title'
         });
     }
-    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+    if (!author || typeof author !== 'string' || author.length > 20) {
         errorsMessages.push({
             message: 'не удалось загрузить видео, проверьте author',
             field: 'author'
